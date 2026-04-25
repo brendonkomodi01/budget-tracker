@@ -13,6 +13,7 @@ spring:
     password: test1234
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
+    open-in-view: false
     hibernate:
       ddl-auto: update
     properties:
@@ -20,7 +21,7 @@ spring:
         show_sql: true
         format_sql: true
         dialect: org.hibernate.dialect.MySQL8Dialect
-    generate-ddl: true
+        generate-ddl: true
 
 logging:
   level:
