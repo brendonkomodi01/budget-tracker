@@ -1,0 +1,18 @@
+<div class="container mt-4">
+  <h2>Summary</h2>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Category name</th>
+      <th>Sum amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of summaryList">
+      <td>{{ item.categoryName }}</td>
+      <td>{{ item.sumAmount }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
