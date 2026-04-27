@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class CategoryService {
 
-  private apiUrl = 'http://localhost:8080/api/categories';
+  private apiUrl = 'https://budget-tracker-production-2b8e.up.railway.app/api/categories';
 
   constructor(private http: HttpClient) {}
 
@@ -17,5 +17,9 @@ export class CategoryService {
 
   create(category: any): Observable<any> {
     return this.http.post<any>(this.apiUrl, category);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 }

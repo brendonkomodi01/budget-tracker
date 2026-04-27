@@ -1,18 +1,26 @@
 <div class="container mt-4">
   <h2>Summary</h2>
 
-  <table class="table table-striped">
-    <thead>
-    <tr>
-      <th>Category name</th>
-      <th>Sum amount</th>
-    </tr>
-    </thead>
-    <tbody>
-    <tr *ngFor="let item of summaryList">
-      <td>{{ item.categoryName }}</td>
-      <td>{{ item.sumAmount }}</td>
-    </tr>
-    </tbody>
-  </table>
+  <div class="row">
+    <div class="col-md-6">
+      <table class="table table-striped">
+        <thead>
+        <tr>
+          <th>Category name</th>
+          <th>Sum amount</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let item of summaryList">
+          <td>{{ item.categoryName }}</td>
+          <td>{{ item.sumAmount | currency:'HUF':'symbol':'1.0-0' }} Ft</td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <canvas #myChart></canvas>
+    </div>
+  </div>
 </div>

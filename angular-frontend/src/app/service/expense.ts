@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 })
 export class ExpenseService {
 
-  private apiUrl = 'http://localhost:8080/api/expenses';
+  private apiUrl = 'https://budget-tracker-production-2b8e.up.railway.app/api/expenses';
 
   constructor(private http: HttpClient) {}
 
@@ -21,5 +21,17 @@ export class ExpenseService {
 
   getSummary(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/summary`);
+  }
+
+  getMonthlyExpenses(): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/monthly`);
+  }
+
+  delete(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.apiUrl}/${id}`);
+  }
+
+  update(id: number, expense: any): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/${id}`, expense);
   }
 }

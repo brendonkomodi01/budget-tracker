@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h2>Monthly expenses</h2>
+
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Total amount</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let item of monthlyExpenses">
+      <td>{{ item.year }}</td>
+      <td>{{ getMonthName(item.month) }}</td>
+      <td>{{ item.totalAmount | currency:'HUF':'symbol':'1.0-0' }} Ft</td>
+    </tr>
+    </tbody>
+  </table>
+</div>

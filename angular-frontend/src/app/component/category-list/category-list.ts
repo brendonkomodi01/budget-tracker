@@ -23,4 +23,15 @@ export class CategoryList implements OnInit {
       }
     });
   }
+
+  deleteCategory(id: number): void {
+    this.categoryService.delete(id).subscribe({
+      next: () => {
+        this.categories = this.categories.filter(category => category.id !== id);
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
 }

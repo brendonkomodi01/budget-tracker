@@ -1,6 +1,40 @@
 <div class="container mt-4">
   <h2>Expense list</h2>
 
+  <div *ngIf="selectedExpense" class="card mb-4">
+    <div class="card-body">
+      <h5 class="card-title">Edit expense</h5>
+      <div class="mb-3">
+        <label class="form-label">Amount</label>
+        <input type="number" class="form-control" [(ngModel)]="selectedExpense.amount">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Expense date</label>
+        <input type="date" class="form-control" [(ngModel)]="selectedExpense.expenseDate" max="9999-12-31">
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Category</label>
+        <select class="form-select" [(ngModel)]="selectedExpense.categoryId">
+          <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Description (optional)</label>
+        <input type="text" class="form-control" [(ngModel)]="selectedExpense.description">
+      </div>
+      <button class="btn btn-success me-2" (click)="updateExpense()">Save</button>
+      <button class="btn btn-secondary" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </div>
+
+  <div class="mb-3">
+    <label class="form-label">Filter by category</label>
+    <select class="form-select" [(ngModel)]="selectedCategoryFilter">
+      <option value="">All categories</option>
+      <option *ngFor="let category of categories" [value]="category.name">{{ category.name }}</option>
+    </select>
+  </div>
+
   <table class="table table-striped">
     <thead>
     <tr>
@@ -8,15 +42,26 @@
       <th>Date</th>
       <th>Category</th>
       <th>Description</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let expense of expenses">
-      <td>{{ expense.amount }}</td>
+    <tr *ngFor="let expense of filteredExpenses">
+      <td>{{ expense.amount | currency:'HUF':'symbol':'1.0-0' }} Ft</td>
       <td>{{ expense.expenseDate | date:'yyyy-MM-dd' }}</td>
       <td>{{ expense.categoryName }}</td>
       <td>{{ expense.description }}</td>
+      <td>
+        <button class="btn btn-warning btn-sm me-2" (click)="editExpense(expense)">Edit</button>
+        <button class="btn btn-danger btn-sm" (click)="deleteExpense(expense.id)">Delete</button>
+      </td>
     </tr>
     </tbody>
+    <tfoot>
+    <tr>
+      <td><strong>Total: {{ totalAmount | currency:'HUF':'symbol':'1.0-0' }} Ft</strong></td>
+      <td colspan="4"></td>
+    </tr>
+    </tfoot>
   </table>
 </div>

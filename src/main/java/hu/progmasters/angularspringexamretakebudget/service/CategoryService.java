@@ -39,4 +39,11 @@ public class CategoryService {
                 .map(category -> modelMapper.map(category, CategoryInfo.class))
                 .collect(Collectors.toList());
     }
+
+    public void deleteCategory(Long id) {
+        Category category = categoryRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Category not found: " + id));
+        categoryRepository.delete(category);
+        log.info("Category is deleted");
+    }
 }

@@ -3,16 +3,12 @@ package hu.progmasters.angularspringexamretakebudget.controller;
 import hu.progmasters.angularspringexamretakebudget.dto.incoming.ExpenseCreateCommand;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.CategorySummaryInfo;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.ExpenseInfo;
+import hu.progmasters.angularspringexamretakebudget.dto.outgoing.MonthlyExpenseInfo;
 import hu.progmasters.angularspringexamretakebudget.service.ExpenseService;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -43,5 +39,23 @@ public class ExpenseController {
     @ResponseStatus(HttpStatus.OK)
     public List<CategorySummaryInfo> getSummary() {
         return expenseService.getSummary();
+    }
+
+    @GetMapping("/monthly")
+    @ResponseStatus(HttpStatus.OK)
+    public List<MonthlyExpenseInfo> getMonthlyExpenses() {
+        return expenseService.getMonthlyExpenses();
+    }
+
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteExpense(@PathVariable Long id) {
+        expenseService.deleteExpense(id);
+    }
+
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ExpenseInfo updateExpense(@PathVariable Long id, @Valid @RequestBody ExpenseCreateCommand command) {
+        return expenseService.updateExpense(id, command);
     }
 }

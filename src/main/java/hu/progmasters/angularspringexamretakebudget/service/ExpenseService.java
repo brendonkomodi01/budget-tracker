@@ -5,6 +5,7 @@ import hu.progmasters.angularspringexamretakebudget.domain.Expense;
 import hu.progmasters.angularspringexamretakebudget.dto.incoming.ExpenseCreateCommand;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.CategorySummaryInfo;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.ExpenseInfo;
+import hu.progmasters.angularspringexamretakebudget.dto.outgoing.MonthlyExpenseInfo;
 import hu.progmasters.angularspringexamretakebudget.repository.CategoryRepository;
 import hu.progmasters.angularspringexamretakebudget.repository.ExpenseRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -81,5 +82,49 @@ public class ExpenseService {
         info.setCategoryName(expense.getCategory().getName());
         info.setDescription(expense.getDescription());
         return info;
+    }
+
+    public List<MonthlyExpenseInfo> getMonthlyExpenses() {
+        return expenseRepository.findAll()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        expense -> expense.getExpenseDate().getYear() + "-" + expense.getExpenseDate().getMonthValue(),
+                        Collectors.summingDouble(Expense::getAmount)
+                ))
+                .entrySet()
+                .stream()
+                .map(entry -> {
+                    String[] parts = entry.getKey().split("-");
+                    MonthlyExpenseInfo info = new MonthlyExpenseInfo();
+                    info.setYear(Integer.parseInt(parts[0]));
+                    info.setMonth(Integer.parseInt(parts[1]));
+                    info.setTotalAmount(entry.getValue());
+                    return info;
+                })
+                .sorted((a, b) -> {
+                    if (a.getYear() != b.getYear()) return b.getYear() - a.getYear();
+                    return b.getMonth() - a.getMonth();
+                })
+                .collect(Collectors.toList());
+    }
+
+    public void deleteExpense(Long id) {
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Expense not found: " + id));
+        expenseRepository.delete(expense);
+        log.info("Expense is deleted");
+    }
+
+    public ExpenseInfo updateExpense(Long id, ExpenseCreateCommand command) {
+        Expense expense = expenseRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Expense not found: " + id));
+        Category category = categoryRepository.findById(command.getCategoryId())
+                .orElseThrow(() -> new IllegalArgumentException("Category not found: " + command.getCategoryId()));
+        expense.setAmount(command.getAmount());
+        expense.setExpenseDate(command.getExpenseDate());
+        expense.setCategory(category);
+        expense.setDescription(command.getDescription());
+        log.info("Expense is updated");
+        return toExpenseInfo(expense);
     }
 }

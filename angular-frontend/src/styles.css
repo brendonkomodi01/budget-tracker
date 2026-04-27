@@ -1,1 +1,133 @@
-/* You can add global styles to this file, and also import other style files */
+body {
+  background-color: #f8fff8;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #2d5a27;
+}
+
+h2 {
+  color: #2d5a27;
+  border-bottom: 2px solid #4caf50;
+  padding-bottom: 10px;
+  margin-bottom: 24px;
+}
+
+.btn-primary {
+  background-color: #4caf50;
+  border-color: #4caf50;
+}
+
+.btn-primary:hover {
+  background-color: #388e3c;
+  border-color: #388e3c;
+}
+
+.btn-danger {
+  background-color: #e53935;
+  border-color: #e53935;
+}
+
+.btn-warning {
+  background-color: #4caf50;
+  border-color: #4caf50;
+  color: white;
+}
+
+.btn-warning:hover {
+  background-color: #e65100;
+  border-color: #e65100;
+  color: white;
+}
+
+.btn-success {
+  background-color: #388e3c;
+  border-color: #388e3c;
+}
+
+.table {
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.table thead {
+  background-color: #4caf50;
+  color: white;
+}
+
+.card {
+  border: 1px solid #a5d6a7;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.card-title {
+  color: #2d5a27;
+}
+
+.form-control:focus, .form-select:focus {
+  border-color: #4caf50;
+  box-shadow: 0 0 0 0.25rem rgba(76,175,80,0.25);
+}
+
+.alert-success {
+  background-color: #c8e6c9;
+  border-color: #a5d6a7;
+  color: #2d5a27;
+}
+
+.container {
+  background-color: white;
+  border-radius: 12px;
+  padding: 32px;
+  margin-top: 32px;
+  margin-bottom: 32px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.table tbody tr:hover {
+  background-color: #e8f5e9;
+  cursor: pointer;
+}
+
+.form-control, .form-select {
+  border-radius: 8px;
+  border: 1px solid #a5d6a7;
+}
+
+.btn {
+  border-radius: 8px;
+}
+
+.text-danger {
+  font-size: 0.85rem;
+  margin-top: 4px;
+}
+
+.form-label {
+  font-weight: 600;
+  color: #2d5a27;
+  margin-bottom: 4px;
+}
+
+.mb-3 {
+  margin-bottom: 20px !important;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  opacity: 1;
+}
+
+.form-control, .form-select {
+  font-weight: 600;
+  color: #2d5a27;
+}
+
+td {
+  font-weight: 500;
+  color: #2d5a27;
+}
+
+.table tbody tr {
+  color: #2d5a27;
+}

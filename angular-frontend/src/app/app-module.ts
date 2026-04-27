@@ -11,6 +11,7 @@ import { CategoryList } from './component/category-list/category-list';
 import { ExpenseCreate } from './component/expense-create/expense-create';
 import { ExpenseList } from './component/expense-list/expense-list';
 import { Summary } from './component/summary/summary';
+import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { Summary } from './component/summary/summary';
     CategoryList,
     ExpenseCreate,
     ExpenseList,
-    Summary
+    Summary,
+    MonthlyExpenses
   ],
   imports: [
     BrowserModule,

@@ -6,12 +6,16 @@
     <tr>
       <th>ID</th>
       <th>Name</th>
+      <th>Action</th>
     </tr>
     </thead>
     <tbody>
     <tr *ngFor="let category of categories">
       <td>{{ category.id }}</td>
       <td>{{ category.name }}</td>
+      <td>
+        <button class="btn btn-danger btn-sm" (click)="deleteCategory(category.id)">Delete</button>
+      </td>
     </tr>
     </tbody>
   </table>
