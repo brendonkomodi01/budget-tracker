@@ -11,6 +11,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -40,13 +41,13 @@ public class BalanceService {
                                     && e.getExpenseDate().getMonthValue() == balance.getMonth())
                             .mapToDouble(e -> e.getAmount())
                             .sum();
-                    return Map.of(
-                            "year", balance.getYear(),
-                            "month", balance.getMonth(),
-                            "startingBalance", balance.getAmount(),
-                            "totalExpenses", totalExpenses,
-                            "remaining", balance.getAmount() - totalExpenses
-                    );
+                    Map<String, Object> result = new HashMap<>();
+                    result.put("year", balance.getYear());
+                    result.put("month", balance.getMonth());
+                    result.put("startingBalance", balance.getAmount());
+                    result.put("totalExpenses", totalExpenses);
+                    result.put("remaining", balance.getAmount() - totalExpenses);
+                    return result;
                 })
                 .collect(Collectors.toList());
     }
@@ -68,12 +69,12 @@ public class BalanceService {
                 .mapToDouble(e -> e.getAmount())
                 .sum();
 
-        return Map.of(
-                "year", year,
-                "month", month,
-                "startingBalance", amount,
-                "totalExpenses", totalExpenses,
-                "remaining", amount - totalExpenses
-        );
+        Map<String, Object> result = new HashMap<>();
+        result.put("year", year);
+        result.put("month", month);
+        result.put("startingBalance", amount);
+        result.put("totalExpenses", totalExpenses);
+        result.put("remaining", amount - totalExpenses);
+        return result;
     }
 }
