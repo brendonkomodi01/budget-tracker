@@ -12,6 +12,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/auth")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "https://budget-tracker-frontend-production-b067.up.railway.app")
 public class AuthController {
 
     private final AppUserService appUserService;
