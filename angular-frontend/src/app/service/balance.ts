@@ -15,7 +15,7 @@ export class BalanceService {
     return this.http.get<any>(this.apiUrl);
   }
 
-  setBalance(amount: number): Observable<any> {
-    return this.http.put<any>(this.apiUrl, { amount });
+  setBalance(year: number, month: number, amount: number): Observable<any> {
+    return this.http.put<any>(this.apiUrl, { year, month, amount });
   }
 }

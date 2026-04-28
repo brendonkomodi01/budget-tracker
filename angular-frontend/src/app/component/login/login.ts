@@ -27,7 +27,7 @@ export class LoginComponent {
       });
     } else {
       this.authService.login(this.username, this.password).subscribe({
-        next: () => this.router.navigate(['/categories']),
+        next: () => this.router.navigate(['/category-list']),
         error: () => this.errorMessage = 'Invalid username or password.'
       });
     }

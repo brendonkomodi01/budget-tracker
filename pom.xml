@@ -8,7 +8,7 @@
         <version>3.5.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>hu.progmasters</groupId>
+    <groupId>hu.brendonkomodi</groupId>
     <artifactId>angular-spring-exam-retake-budget</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>angular-spring-exam-retake-budget</name>

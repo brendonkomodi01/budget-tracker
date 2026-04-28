@@ -1,15 +1,53 @@
 <div class="container mt-4">
-  <h2>Current balance</h2>
+  <h2>Balance</h2>
+
   <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
-  <div class="card p-4" style="max-width: 400px;">
-    <div class="mb-3">
-      <label class="form-label">Current balance</label>
-      <p class="fw-bold fs-4">{{ currentBalance | currency:'HUF':'symbol':'1.0-0' }} Ft</p>
+
+  <div class="card p-4 mb-4" style="max-width: 500px;">
+    <h5>Set monthly balance</h5>
+    <div class="row mb-3">
+      <div class="col">
+        <label class="form-label">Year</label>
+        <select class="form-select" [(ngModel)]="selectedYear">
+          <option *ngFor="let year of years" [ngValue]="year">{{ year }}</option>
+        </select>
+      </div>
+      <div class="col">
+        <label class="form-label">Month</label>
+        <select class="form-select" [(ngModel)]="selectedMonth">
+          <option *ngFor="let month of months" [ngValue]="month">{{ month }}</option>
+        </select>
+      </div>
     </div>
     <div class="mb-3">
-      <label class="form-label">Set new balance</label>
-      <input type="number" class="form-control" [(ngModel)]="newBalance" />
+      <label class="form-label">Starting balance</label>
+      <input type="number" class="form-control" [(ngModel)]="newAmount"
+             (focus)="newAmount === 0 ? newAmount = null! : null" placeholder="Enter amount" />
     </div>
     <button class="btn btn-success" (click)="save()">Save</button>
   </div>
+
+  <h4>Monthly overview</h4>
+  <table class="table table-striped">
+    <thead>
+    <tr>
+      <th>Year</th>
+      <th>Month</th>
+      <th>Starting balance</th>
+      <th>Total expenses</th>
+      <th>Remaining</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let b of balances">
+      <td>{{ b.year }}</td>
+      <td>{{ b.month }}</td>
+      <td>{{ b.startingBalance | currency:'HUF':'symbol':'1.0-0' }} Ft</td>
+      <td>{{ b.totalExpenses | currency:'HUF':'symbol':'1.0-0' }} Ft</td>
+      <td [ngClass]="b.remaining < 0 ? 'text-danger fw-bold' : 'text-success fw-bold'">
+        {{ b.remaining | currency:'HUF':'symbol':'1.0-0' }} Ft
+      </td>
+    </tr>
+    </tbody>
+  </table>
 </div>
