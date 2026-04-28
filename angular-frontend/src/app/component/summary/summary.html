@@ -1,6 +1,21 @@
 <div class="container mt-4">
   <h2>Summary</h2>
 
+  <div class="row mb-3">
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="selectedYear" (change)="onYearChange()">
+        <option [ngValue]="null">All years</option>
+        <option *ngFor="let year of availableYears" [ngValue]="year">{{ year }}</option>
+      </select>
+    </div>
+    <div class="col-md-3">
+      <select class="form-select" [(ngModel)]="selectedMonth" (change)="onMonthChange()" [disabled]="!selectedYear">
+        <option [ngValue]="null">All months</option>
+        <option *ngFor="let month of availableMonths" [ngValue]="month">{{ month }}</option>
+      </select>
+    </div>
+  </div>
+
   <div class="row">
     <div class="col-md-6">
       <table class="table table-striped">
