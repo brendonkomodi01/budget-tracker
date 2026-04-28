@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -17,15 +18,17 @@ public class BalanceController {
     private final BalanceService balanceService;
 
     @GetMapping
-    public ResponseEntity<Map<String, Double>> getBalance() {
-        log.info("Balance requested");
-        return ResponseEntity.ok(Map.of("amount", balanceService.getBalance()));
+    public ResponseEntity<List<Map<String, Object>>> getAllBalances() {
+        log.info("All balances requested");
+        return ResponseEntity.ok(balanceService.getAllBalances());
     }
 
     @PutMapping
-    public ResponseEntity<Map<String, Double>> setBalance(@RequestBody Map<String, Double> body) {
+    public ResponseEntity<Map<String, Object>> setBalance(@RequestBody Map<String, Object> body) {
         log.info("Balance update requested");
-        Double amount = balanceService.setBalance(body.get("amount"));
-        return ResponseEntity.ok(Map.of("amount", amount));
+        Integer year = (Integer) body.get("year");
+        Integer month = (Integer) body.get("month");
+        Double amount = ((Number) body.get("amount")).doubleValue();
+        return ResponseEntity.ok(balanceService.setBalance(year, month, amount));
     }
 }

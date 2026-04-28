@@ -5,10 +5,13 @@ import hu.progmasters.angularspringexamretakebudget.domain.Balance;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BalanceRepository extends JpaRepository<Balance, Long> {
 
-    Optional<Balance> findByUser(AppUser user);
+    Optional<Balance> findByUserAndYearAndMonth(AppUser user, Integer year, Integer month);
+
+    List<Balance> findAllByUser(AppUser user);
 }

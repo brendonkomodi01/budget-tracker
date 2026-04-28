@@ -8,6 +8,7 @@ import { Summary } from './component/summary/summary';
 import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
 import { LoginComponent } from './component/login/login';
 import { AuthGuard } from './service/auth-guard';
+import { BalanceComponent } from './component/balance/balance';
 
 const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'expense-create', component: ExpenseCreate, canActivate: [AuthGuard] },
   { path: 'expense-list', component: ExpenseList, canActivate: [AuthGuard] },
   { path: 'summary', component: Summary, canActivate: [AuthGuard] },
-  { path: 'monthly-expenses', component: MonthlyExpenses, canActivate: [AuthGuard] }
+  { path: 'monthly-expenses', component: MonthlyExpenses, canActivate: [AuthGuard] },
+  { path: 'balance', component: BalanceComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({

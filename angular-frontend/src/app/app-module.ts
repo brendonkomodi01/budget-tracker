@@ -14,6 +14,7 @@ import { Summary } from './component/summary/summary';
 import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
 import { LoginComponent } from './component/login/login';
 import { AuthInterceptor } from './service/auth-interceptor';
+import { BalanceComponent } from './component/balance/balance';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import { AuthInterceptor } from './service/auth-interceptor';
     ExpenseList,
     Summary,
     MonthlyExpenses,
-    LoginComponent
+    LoginComponent,
+    BalanceComponent
   ],
   imports: [
     BrowserModule,
