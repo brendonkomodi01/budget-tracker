@@ -1,13 +1,16 @@
 <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #2d5a27;">
   <div class="container-fluid px-4">
     <a class="navbar-brand fw-bold" routerLink="/">🌿 Budget Tracker</a>
-    <div class="navbar-nav">
+    <div class="navbar-nav me-auto">
       <a class="nav-link" routerLink="/category-create" routerLinkActive="active">Create new category</a>
       <a class="nav-link" routerLink="/category-list" routerLinkActive="active">Category list</a>
       <a class="nav-link" routerLink="/expense-create" routerLinkActive="active">Create new expense</a>
       <a class="nav-link" routerLink="/expense-list" routerLinkActive="active">Expense list</a>
       <a class="nav-link" routerLink="/summary" routerLinkActive="active">Summary</a>
       <a class="nav-link" routerLink="/monthly-expenses" routerLinkActive="active">Monthly expenses</a>
+    </div>
+    <div class="navbar-nav" *ngIf="isLoggedIn()">
+      <a class="nav-link text-warning" style="cursor:pointer" (click)="logout()">Logout</a>
     </div>
   </div>
 </nav>

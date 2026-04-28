@@ -1,0 +1,22 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <h2>{{ isRegisterMode ? 'Register' : 'Login' }}</h2>
+      <div *ngIf="errorMessage" class="alert alert-info">{{ errorMessage }}</div>
+      <div class="mb-3">
+        <label class="form-label">Username</label>
+        <input type="text" class="form-control" [(ngModel)]="username" />
+      </div>
+      <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" class="form-control" [(ngModel)]="password" />
+      </div>
+      <button class="btn btn-success me-2" (click)="submit()">
+        {{ isRegisterMode ? 'Register' : 'Login' }}
+      </button>
+      <button class="btn btn-link" (click)="toggleMode()">
+        {{ isRegisterMode ? 'Already have an account? Login' : 'No account? Register' }}
+      </button>
+    </div>
+  </div>
+</div>

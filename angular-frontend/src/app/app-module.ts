@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing-module';
 import { App } from './app';
@@ -12,6 +12,8 @@ import { ExpenseCreate } from './component/expense-create/expense-create';
 import { ExpenseList } from './component/expense-list/expense-list';
 import { Summary } from './component/summary/summary';
 import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
+import { LoginComponent } from './component/login/login';
+import { AuthInterceptor } from './service/auth-interceptor';
 
 @NgModule({
   declarations: [
@@ -22,7 +24,8 @@ import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
     ExpenseCreate,
     ExpenseList,
     Summary,
-    MonthlyExpenses
+    MonthlyExpenses,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,9 @@ import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
     FormsModule,
     HttpClientModule
   ],
-  providers: [],
+  providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [App]
 })
 export class AppModule { }

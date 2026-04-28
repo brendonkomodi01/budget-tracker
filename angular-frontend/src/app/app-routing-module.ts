@@ -6,15 +6,18 @@ import { ExpenseCreate } from './component/expense-create/expense-create';
 import { ExpenseList } from './component/expense-list/expense-list';
 import { Summary } from './component/summary/summary';
 import { MonthlyExpenses } from './component/monthly-expenses/monthly-expenses';
+import { LoginComponent } from './component/login/login';
+import { AuthGuard } from './service/auth-guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/category-list', pathMatch: 'full' },
-  { path: 'category-create', component: CategoryCreate },
-  { path: 'category-list', component: CategoryList },
-  { path: 'expense-create', component: ExpenseCreate },
-  { path: 'expense-list', component: ExpenseList },
-  { path: 'summary', component: Summary },
-  { path: 'monthly-expenses', component: MonthlyExpenses }
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'category-create', component: CategoryCreate, canActivate: [AuthGuard] },
+  { path: 'category-list', component: CategoryList, canActivate: [AuthGuard] },
+  { path: 'expense-create', component: ExpenseCreate, canActivate: [AuthGuard] },
+  { path: 'expense-list', component: ExpenseList, canActivate: [AuthGuard] },
+  { path: 'summary', component: Summary, canActivate: [AuthGuard] },
+  { path: 'monthly-expenses', component: MonthlyExpenses, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
