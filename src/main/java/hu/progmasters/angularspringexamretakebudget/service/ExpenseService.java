@@ -1,15 +1,18 @@
 package hu.progmasters.angularspringexamretakebudget.service;
 
+import hu.progmasters.angularspringexamretakebudget.domain.AppUser;
 import hu.progmasters.angularspringexamretakebudget.domain.Category;
 import hu.progmasters.angularspringexamretakebudget.domain.Expense;
 import hu.progmasters.angularspringexamretakebudget.dto.incoming.ExpenseCreateCommand;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.CategorySummaryInfo;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.ExpenseInfo;
 import hu.progmasters.angularspringexamretakebudget.dto.outgoing.MonthlyExpenseInfo;
+import hu.progmasters.angularspringexamretakebudget.repository.AppUserRepository;
 import hu.progmasters.angularspringexamretakebudget.repository.CategoryRepository;
 import hu.progmasters.angularspringexamretakebudget.repository.ExpenseRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,14 +27,23 @@ public class ExpenseService {
 
     private final ExpenseRepository expenseRepository;
     private final CategoryRepository categoryRepository;
+    private final AppUserRepository appUserRepository;
     private final ModelMapper modelMapper;
 
     public ExpenseService(ExpenseRepository expenseRepository,
                           CategoryRepository categoryRepository,
+                          AppUserRepository appUserRepository,
                           ModelMapper modelMapper) {
         this.expenseRepository = expenseRepository;
         this.categoryRepository = categoryRepository;
+        this.appUserRepository = appUserRepository;
         this.modelMapper = modelMapper;
+    }
+
+    private AppUser getCurrentUser() {
+        String username = SecurityContextHolder.getContext().getAuthentication().getName();
+        return appUserRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
     public ExpenseInfo createExpense(ExpenseCreateCommand command) {
@@ -42,6 +54,7 @@ public class ExpenseService {
         expense.setExpenseDate(command.getExpenseDate());
         expense.setCategory(category);
         expense.setDescription(command.getDescription());
+        expense.setUser(getCurrentUser());
         Expense saved = expenseRepository.save(expense);
         log.info("Expense is created");
         return toExpenseInfo(saved);
@@ -49,7 +62,8 @@ public class ExpenseService {
 
     public List<ExpenseInfo> findAllExpenses() {
         log.info("Expenses list page is requested");
-        return expenseRepository.findAllByOrderByExpenseDateDesc()
+        AppUser user = getCurrentUser();
+        return expenseRepository.findAllByUserOrderByExpenseDateDesc(user)
                 .stream()
                 .map(this::toExpenseInfo)
                 .collect(Collectors.toList());
@@ -57,7 +71,8 @@ public class ExpenseService {
 
     public List<CategorySummaryInfo> getSummary() {
         log.info("Summary page is requested");
-        Map<String, Double> summaryMap = expenseRepository.findAll()
+        AppUser user = getCurrentUser();
+        Map<String, Double> summaryMap = expenseRepository.findAllByUser(user)
                 .stream()
                 .collect(Collectors.groupingBy(
                         expense -> expense.getCategory().getName(),
@@ -85,7 +100,8 @@ public class ExpenseService {
     }
 
     public List<MonthlyExpenseInfo> getMonthlyExpenses() {
-        return expenseRepository.findAll()
+        AppUser user = getCurrentUser();
+        return expenseRepository.findAllByUser(user)
                 .stream()
                 .collect(Collectors.groupingBy(
                         expense -> expense.getExpenseDate().getYear() + "-" + expense.getExpenseDate().getMonthValue(),
